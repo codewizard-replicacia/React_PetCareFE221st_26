@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Model">
+            <EntityType HasStream="false" Name="Pet">
+                <Key>
+                    <PropertyRef Name="PetId"/>
+                </Key>
+                <Property Name="PetId" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="PetName" Type="Edm.String" isUnique="false"/>
+                <Property Name="Breed" Type="Edm.String" isUnique="false"/>
+                <Property Name="AnimalType" Type="Edm.String" isUnique="false"/>
+                <Property Name="Gender" Type="Edm.String" isUnique="false"/>
+                <Property Name="Color" Type="Edm.String" isUnique="false"/>
+                <Property Name="Weight" Type="Edm.Decimal" isUnique="false"/>
+                <Property Name="Height" Type="Edm.Decimal" isUnique="false"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="PetCareCenter">
+                <Key>
+                    <PropertyRef Name="PcId"/>
+                </Key>
+                <Property Name="PcId" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="Address" Type="Edm.String" isUnique="false"/>
+                <Property Name="Name" Type="Edm.String" isUnique="false"/>
+                <Property Name="Description" Type="Edm.String" isUnique="false"/>
+                <Property Name="BranchName" Type="Edm.String" isUnique="false"/>
+                <Property Name="Latitude" Type="Edm.Single" isUnique="false"/>
+                <Property Name="Longitude" Type="Edm.Single" isUnique="false"/>
+                <Property Name="Pincode" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="IsOperational" Type="Edm.Boolean" isUnique="false"/>
+                <Property Name="BusinessHours" Type="Collection(Edm.String)" isUnique="false"/>
+                <Property Name="NearbyLocation" Type="Edm.String" isUnique="false"/>
+                <NavigationProperty Name="Logo" Type="Model.Document"/>
+                <NavigationProperty Name="Images" Type="Collection(Model.Document)"/>
+                <NavigationProperty Name="Services" Type="Collection(Model.PetService)"/>
+                <NavigationProperty Name="Pets" Type="Collection(Model.Pet)"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="PetOwner">
+                <Key>
+                    <PropertyRef Name="OwnerId"/>
+                </Key>
+                <Property Name="OwnerId" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="OwnerName" Type="Edm.String" isUnique="false"/>
+                <Property Name="ContactPrimary" Type="Edm.String" isUnique="false"/>
+                <Property Name="ContactSecondary" Type="Edm.String" isUnique="false"/>
+                <Property Name="Address" Type="Edm.String" isUnique="false"/>
+                <Property Name="Pincode" Type="Edm.String" isUnique="false"/>
+                <NavigationProperty Name="Pets" Type="Collection(Model.Pet)"/>
+            </EntityType>
+            <EntityType HasStream="true" Name="Document">
+                <Key>
+                    <PropertyRef Name="DocId"/>
+                </Key>
+                <Property Name="DocId" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="DocName" Type="Edm.String" isUnique="false"/>
+                <Property Name="FileName" Type="Edm.String" isUnique="false"/>
+                <Property Name="FileType" Type="Edm.String" isUnique="false"/>
+                <Property Name="FileDescription" Type="Edm.String" isUnique="false"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="PetService">
+                <Key>
+                    <PropertyRef Name="ServiceId"/>
+                </Key>
+                <Property Name="ServiceId" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="ServiceType" Type="Model.PetServiceType" isUnique="false"/>
+                <Property Name="Price" Type="Edm.Decimal" isUnique="false"/>
+                <Property Name="DogSize" Type="Edm.String" isUnique="false"/>
+                <Property Name="ServiceAt" Type="Edm.String" isUnique="false"/>
+                <Property Name="DurationInDays" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="DurationInHours" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="OnlineBookingAllowed" Type="Edm.Boolean" isUnique="false"/>
+                <Property Name="AdvPaymentReqd" Type="Edm.Boolean" isUnique="false"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="Pets" EntityType="Model.Pet"/>
+                <EntitySet Name="PetCareCenters" EntityType="Model.PetCareCenter">
+                    <NavigationPropertyBinding Path="Logo" Target="Documents"/>
+                    <NavigationPropertyBinding Path="Images" Target="Documents"/>
+                    <NavigationPropertyBinding Path="Services" Target="PetServices"/>
+                    <NavigationPropertyBinding Path="Pets" Target="Pets"/>
+                </EntitySet>
+                <EntitySet Name="PetOwners" EntityType="Model.PetOwner">
+                    <NavigationPropertyBinding Path="Pets" Target="Pets"/>
+                </EntitySet>
+                <EntitySet Name="Documents" EntityType="Model.Document"/>
+                <EntitySet Name="PetServices" EntityType="Model.PetService"/>
+            </EntityContainer>
+            <EnumType Name="PetServiceType">
+                <Member Name="PetGrooming" Value="0"/>
+                <Member Name="PetBoarding" Value="1"/>
+                <Member Name="PetTraining" Value="2"/>
+                <Member Name="PetSitting" Value="3"/>
+                <Member Name="PetTherapy" Value="4"/>
+            </EnumType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
